@@ -1,3 +1,4 @@
+#Tinder Analysis - Calum Harvey
 import pandas as pd
 import json
 
@@ -21,9 +22,10 @@ def matchRatio(table):
 
     return matchesPerLike, matchesPerMatch
 
-
-with open('test.json') as f:
+#Swiped Data contains data on swipes taken from full json file given
+with open('swipeData.json') as f:
    temp = json.load(f)
+
 
 data = pd.DataFrame(temp)
 
@@ -45,6 +47,5 @@ print("Total likes: ", data["swipes_likes"].sum())
 print("Total passes: ", data["swipes_passes"].sum())
 print("Total swipes: ", data["total_swipes"].sum())
 
-print("\n\n\n\n\n\n\n\n\n\n\n Most Attractive Man on Tinder")
 
 #print(data)

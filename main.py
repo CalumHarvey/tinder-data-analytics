@@ -7,7 +7,7 @@ def swipeRatio(table):
     totalLikes = table["swipes_likes"].sum()
     totalPasses = table["swipes_passes"].sum()
     
-    passesPerLike = totalPasses / totalLikes
+    passesPerLike = "{:.2f}".format(totalPasses / totalLikes)
     likesPerLike = totalLikes / totalLikes
 
     return passesPerLike, likesPerLike
@@ -17,17 +17,19 @@ def matchRatio(table):
     totalLikes = table["swipes_likes"].sum()
     totalMatches = table["matches"].sum()
     
-    matchesPerLike = totalLikes / totalMatches
+    matchesPerLike = "{:.2f}".format(totalLikes / totalMatches)
     matchesPerMatch = totalMatches / totalMatches
 
     return matchesPerLike, matchesPerMatch
 
 #Swiped Data contains data on swipes taken from full json file given
-with open('swipeData.json') as f:
-   temp = json.load(f)
+with open('data.json', "r") as f:
+    temp = f.read()
+    temp1 = temp[26:10253] + "}"
 
+temp2 = json.loads(temp1)
 
-data = pd.DataFrame(temp)
+data = pd.DataFrame(temp2)
 
 data.index.name = "Date"
 

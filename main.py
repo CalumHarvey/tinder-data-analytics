@@ -22,32 +22,40 @@ def matchRatio(table):
 
     return matchesPerLike, matchesPerMatch
 
-#Swiped Data contains data on swipes taken from full json file given
-with open('data.json', "r") as f:
-    temp = f.read()
-    temp1 = temp[26:10253] + "}"
+def openFile(name="data.json"):
 
-temp2 = json.loads(temp1)
+    #Swiped Data contains data on swipes taken from full json file given
+    with open('data.json', "r") as json_file:
+        temp = json.load(json_file)
 
-data = pd.DataFrame(temp2)
+    temp2 = temp["Usage"]
 
-data.index.name = "Date"
+    data = pd.DataFrame(temp2)
 
-data["total_swipes"] = data["swipes_likes"] + data["swipes_passes"]
+    return data
 
-totalLikes = data["swipes_likes"].sum()
-totalPasses = data["swipes_passes"].sum()
+def main():
 
-swipesRatio = swipeRatio(data)
-matchesRatio = matchRatio(data)
+    data = openFile()
+
+    data.index.name = "Date"
+
+    data["total_swipes"] = data["swipes_likes"] + data["swipes_passes"]
+
+    totalLikes = data["swipes_likes"].sum()
+    totalPasses = data["swipes_passes"].sum()
+
+    swipesRatio = swipeRatio(data)
+    matchesRatio = matchRatio(data)
 
 
-print("\nData from: ", data.index[0], " - ", data.index[-1])
-print("\nLike to swipe ratio: ", swipesRatio[1], " : ", swipesRatio[0])
-print("Matches to like ratio: ", matchesRatio[1], " : ", matchesRatio[0])
-print("Total likes: ", data["swipes_likes"].sum())
-print("Total passes: ", data["swipes_passes"].sum())
-print("Total swipes: ", data["total_swipes"].sum())
+    print("\nData from: ", data.index[0], " - ", data.index[-1])
+    print("\nLike to swipe ratio: ", swipesRatio[1], " : ", swipesRatio[0])
+    print("Matches to like ratio: ", matchesRatio[1], " : ", matchesRatio[0])
+    print("Total likes: ", data["swipes_likes"].sum())
+    print("Total passes: ", data["swipes_passes"].sum())
+    print("Total swipes: ", data["total_swipes"].sum())
 
 
-#print(data)
+if __name__ == "__main__":
+    main()
